@@ -15,12 +15,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+// Controller for new booking and manage old booking
+
+//http://scpeventaws-env.eba-fkdtam2z.us-east-1.elasticbeanstalk.com/
+
 @RestController
 @RequestMapping("/api/bookings")
 //@CrossOrigin(origins="*/")
 public class BookingController {
 
-	
+	// to overcome CORS issue
 	@Bean
     public WebMvcConfigurer getCorsConfiguration(){
         return new WebMvcConfigurer() {
@@ -37,6 +41,7 @@ public class BookingController {
 	@Autowired
 	private BookingRepository bookingRepositery;
 	
+	//http://scpeventaws-env.eba-fkdtam2z.us-east-1.elasticbeanstalk.com/api/bookings/all
 	//Getting all bookings
 	@GetMapping("/all")
 	public List <Booking> getAllBookings(){
@@ -44,13 +49,16 @@ public class BookingController {
 		return this.bookingRepositery.findAll();
 	}
 	
+	//https://ma7o43svol.execute-api.us-east-1.amazonaws.com/test/event-service?id=1
 	//getting by id
 	@GetMapping("/filter/{id}")
 	public Booking getBookingById(@PathVariable (value = "id") long bookingId) {
+		// if booking id not found
 		return this.bookingRepositery.findById(bookingId).orElseThrow(() -> new ResourceNotFoundException("Booking not found with id :" + bookingId));
 	}
 	
 	// post booking
+	// add booking to db
 	@PostMapping
 	public Booking createBooking(@RequestBody Booking booking) {
 		
@@ -59,9 +67,11 @@ public class BookingController {
 	}
 	
 	//put booking
+	//edit existing booking
 	@PutMapping("/{id}")
 	public Booking updateBooking(@RequestBody Booking booking, @PathVariable ("id") long bookingId) {
 	
+		// if booking not found with specified id
 		Booking existing=this.bookingRepositery.findById(bookingId).orElseThrow(() -> new ResourceNotFoundException("Booking not found with id :" + bookingId));
 		
 		existing.setfName(booking.getfName());
@@ -81,6 +91,7 @@ public class BookingController {
 	}
 	
 	//delete booking
+	// delete specified id booking
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Booking> deleteBooking(@PathVariable ("id") long bookingId){
 		

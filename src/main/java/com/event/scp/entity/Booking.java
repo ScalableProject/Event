@@ -2,15 +2,20 @@ package com.event.scp.entity;
 
 import javax.persistence.*;
 
+//it will auto create a table once application will run
 @Entity
 @Table(name ="bookings")
 public class Booking {
 
+	// unique auto generated id
+	//PK
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 	
+	// column names will display in db
 	@Column(name="f_name")
+	//variables for get and set methods
     private String fName;
 	
 	@Column(name="l_name")
@@ -43,6 +48,7 @@ public class Booking {
 	@Column(name="request")
     private String request;
 	
+	// Constructors 
     public Booking(){
     
     }
