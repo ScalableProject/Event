@@ -2,6 +2,9 @@ package com.event.scp.entity;
 
 import javax.persistence.*;
 
+
+// checking 
+
 //it will auto create a table once application will run
 @Entity
 @Table(name ="bookings")
